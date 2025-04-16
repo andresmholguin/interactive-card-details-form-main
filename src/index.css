@@ -1,8 +1,29 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: Space-Grotesk;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./assets/font/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf")
+    format("woff2");
+}
+
 @theme {
   --color-White: hsl(0, 0%, 100%);
   --color-Light-grayish-violet: hsl(270, 3%, 87%);
   --color-Dark-grayish-violet: hsl(279, 6%, 55%);
   --color-Very-dark-violet: hsl(278, 68%, 11%);
+
+  --color-Red-errors: hsl(0, 100%, 66%);
+
+  --font-Space-Grotesk: "Space-Grotesk";
+
+  --breakpoint-1xl: 1440px;
 }
+
+/* @layer Linear-gradient-active-border {
+  .active-border {
+    @apply bg-gradient-to-r from-hsl(249, 99%, 64%) to-hsl(278, 94%, 30%);
+  }
+} */
