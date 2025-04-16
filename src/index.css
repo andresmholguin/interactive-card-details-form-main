@@ -3,7 +3,7 @@
 @font-face {
   font-family: Space-Grotesk;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 300;
   font-display: swap;
   src: url("./assets/font/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf")
     format("woff2");
@@ -22,8 +22,14 @@
   --breakpoint-1xl: 1440px;
 }
 
-/* @layer Linear-gradient-active-border {
-  .active-border {
-    @apply bg-gradient-to-r from-hsl(249, 99%, 64%) to-hsl(278, 94%, 30%);
+@layer components {
+  .label {
+    @apply uppercase text-xs tracking-[2px] block mb-2;
   }
-} */
+  .input {
+    @apply bg-White border border-Light-grayish-violet rounded-lg p-3 mb-4 w-[100%];
+  }
+  .input:focus {
+    @apply outline-none border-2 border-Dark-grayish-violet;
+  }
+}
