@@ -49,12 +49,12 @@ function App() {
             placeholder="e.g. 1234 5678 9123 0000"
             required
           />
-          <div className="grid grid-cols-2 gap-x-3 mb-4">
+          <div className="grid grid-cols-2 gap-x-5 mb-4">
             <div className="">
               <label className="label" htmlFor="expDate">
                 Exp. Date (MM/YY)
               </label>
-              <div className=" grid grid-cols-2 gap-4">
+              <div className=" grid grid-cols-2 gap-1">
                 <input
                   className="input"
                   type="text"
