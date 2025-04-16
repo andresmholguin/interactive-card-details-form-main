@@ -11,11 +11,11 @@ function App() {
         <picture className="w-full h-full 1xl:flex">
           <source media="(max-width: 1439px)" srcSet={bgMainMobile} />
           <source media="(min-width: 1440px)" srcSet={bgMainDesktop} />
-          <img src={bgMainMobile} alt="Background Degrade." loading="lazy" />
+          <img src={bgMainMobile} alt="Background Degrade." />
         </picture>
-        <div className="absolute w-[287px] h-[158px] top-[126px] left-[18px] z-1 1xl:top-[187px] 1xl:left-[167px] bg-[url('./assets/images/bg-card-front.png')] bg-no-repeat bg-cover p-6 text-white">
-          <img className="h-[32px] mb-6 " src={cardLogo} alt="Card logo" />
-          <p className=" tracking-[2px] pb-4">0000 0000 0000 0000</p>
+        <div className="absolute w-[288px] h-[160px] top-[126px] left-[18px] z-1 1xl:top-[187px] 1xl:left-[167px] bg-[url('./assets/images/bg-card-front.png')] bg-no-repeat bg-cover p-6 text-white">
+          <img className="w-[55px] mb-7 " src={cardLogo} alt="Card logo" />
+          <p className=" tracking-[2px] mb-4">0000 0000 0000 0000</p>
           <div className="flex justify-between text-[10px] uppercase">
             <p>Jane Appleseed</p>
             <p>
@@ -23,7 +23,7 @@ function App() {
             </p>
           </div>
         </div>
-        <div className="absolute w-[287px] h-[158] top-[30px] left-[75px] 1xl:top-[468px] 1xl:left-[257px] bg-url('./assets/images/bg-card-back.png') bg-no-repeat bg-cover p-6 text-white">
+        <div className="absolute w-[288px] h-[160px] top-[30px] left-[75px]  1xl:top-[468px] 1xl:left-[257px] bg-[url('./assets/images/bg-card-back.png')] bg-no-repeat bg-cover text-white text-right pr-9 pt-16">
           <p>000</p>
         </div>
       </section>
