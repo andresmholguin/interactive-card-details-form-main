@@ -19,7 +19,7 @@
 
   --font-Space-Grotesk: "Space-Grotesk";
 
-  --breakpoint-1xl: 1440px;
+  --breakpoint-rw: 1440px;
 }
 
 @layer components {
