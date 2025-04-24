@@ -16,7 +16,6 @@ function App() {
   });
 
   const handleNumberCard = (e) => {
-    console.log(e.target.id);
     const { value } = e.target;
     const formattedValue = value
       .replace(/\s+/g, "")
@@ -27,6 +26,48 @@ function App() {
       ...prev,
       cardNumber: formattedValue,
     }));
+  };
+
+  const handleNameCard = (e) => {
+    const { value } = e.target;
+    const formattedValue = value
+      .replace(/[^a-zA-Z\s]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    setDataCard((prev) => ({
+      ...prev,
+      cardName: formattedValue,
+    }));
+  };
+
+  const handleMMExpDate = (e) => {
+    const { value } = e.target;
+    const formattedValue = value.replace(/[^0-9]/g, "").slice(0, 2);
+    setDataCard((prev) => ({
+      ...prev,
+      mmExpDate: formattedValue,
+    }));
+  };
+  const handleYYExpDate = (e) => {
+    const { value } = e.target;
+    const formattedValue = value.replace(/[^0-9]/g, "").slice(0, 2);
+    setDataCard((prev) => ({
+      ...prev,
+      yyExpDate: formattedValue,
+    }));
+  };
+
+  const handleCvc = (e) => {
+    const { value } = e.target;
+    const formattedValue = value.replace(/[^0-9]/g, "").slice(0, 3);
+    setDataCard((prev) => ({
+      ...prev,
+      cvc: formattedValue,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(dataCard);
   };
 
   return (
@@ -53,7 +94,7 @@ function App() {
             {dataCard.cardNumber}
           </p>
           <div className="flex justify-between text-[10px] rw:mt-[60px] rw:text-sm uppercase">
-            <p>{dataCard.nombre}</p>
+            <p>{dataCard.cardName}</p>
             <p>
               <span>{dataCard.mmExpDate}</span>/
               <span>{dataCard.yyExpDate}</span>
@@ -71,8 +112,10 @@ function App() {
           </label>
           <input
             className="input"
+            onChange={handleNameCard}
             type="text"
             id="cardholder"
+            name="cardholder"
             placeholder="e.g. Jane Appleseed"
             required
           />
@@ -85,6 +128,7 @@ function App() {
             type="text"
             placeholder="e.g. 1234 5678 9123 0000"
             maxLength={16}
+            id="cardNumber"
             name="cardNumber"
             required
           />
@@ -96,16 +140,18 @@ function App() {
               <div className="grid grid-cols-2 gap-1">
                 <input
                   className="input"
+                  onChange={handleMMExpDate}
                   type="text"
-                  name="mmExpDate"
+                  id="mmExpDate"
                   maxLength={2}
                   placeholder="MM"
                   required
                 />
                 <input
                   className="input"
+                  onChange={handleYYExpDate}
                   type="text"
-                  name="yyExpDate"
+                  od="yyExpDate"
                   maxLength={2}
                   placeholder="YY"
                   required
@@ -118,7 +164,9 @@ function App() {
               </label>
               <input
                 className="input"
+                onChange={handleCvc}
                 type="text"
+                id="cvc"
                 name="cvc"
                 placeholder="e.g. 123"
                 maxLength={3}
@@ -129,6 +177,7 @@ function App() {
           <button
             className="bg-Very-dark-violet w-[100%] text-Light-grayish-violet py-3 rounded-[10px] font-bold"
             type="submit"
+            onClick={handleSubmit}
           >
             Confirm
           </button>
