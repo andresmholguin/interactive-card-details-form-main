@@ -15,17 +15,43 @@ function App() {
     cvc: "000",
   });
 
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  const monthFormatted = month < 10 ? `0${month}` : month.toString();
+
+  // const year = date.getFullYear().toString().slice(-2);
+  let expReg = /[A-z]/g;
+
   const handleNumberCard = (e) => {
-    const { value } = e.target;
-    const formattedValue = value
-      .replace(/\s+/g, "")
-      .slice(0, 16)
-      .replace(/(\d{4})(?=\d)/g, "$1 ")
-      .trim();
-    setDataCard((prev) => ({
-      ...prev,
-      cardNumber: formattedValue,
-    }));
+    const errorNumber = document.getElementById("errorCardNumber");
+    if (expReg.test(e.target.value)) {
+      errorNumber.innerHTML = "Please enter only numbers";
+      e.target.classList.add("border");
+      e.target.classList.add("border-Red-errors");
+
+      return;
+    } else if (!expReg.test(e.target.value)) {
+      const { value } = e.target;
+      const formattedValue = value
+        .replace(/\s+/g, "")
+        .replace(/[^0-9]/g, "")
+        .slice(0, 16)
+        .replace(/(\d{4})(?=\d)/g, "$1 ")
+        .trim();
+      errorNumber.innerHTML = "";
+      e.target.classList.remove("border");
+      e.target.classList.remove("border-Red-errors");
+      setDataCard((prev) => ({
+        ...prev,
+        cardNumber: formattedValue,
+      }));
+      if (e.target.value == "") {
+        setDataCard((prev) => ({
+          ...prev,
+          cardNumber: "0000 0000 0000 0000",
+        }));
+      }
+    }
   };
 
   const handleNameCard = (e) => {
@@ -34,6 +60,7 @@ function App() {
       .replace(/[^a-zA-Z\s]/g, "")
       .replace(/\s+/g, " ")
       .trim();
+
     setDataCard((prev) => ({
       ...prev,
       cardName: formattedValue,
@@ -43,14 +70,43 @@ function App() {
   const handleMMExpDate = (e) => {
     const { value } = e.target;
     const formattedValue = value.replace(/[^0-9]/g, "").slice(0, 2);
-    setDataCard((prev) => ({
-      ...prev,
-      mmExpDate: formattedValue,
-    }));
+    const errorExpDate = document.getElementById("errorExpDateCard");
+    console.log(formattedValue);
+    if (formattedValue > 12 || formattedValue < 1) {
+      console.log("MM es mayor a 12");
+      errorExpDate.innerHTML = "MM invalid";
+      e.target.classList.add("border");
+      e.target.classList.add("border-Red-errors");
+    } else {
+      console.log("entro al ELSE");
+      errorExpDate.innerHTML = "";
+      e.target.classList.remove("border");
+      e.target.classList.remove("border-Red-errors");
+      if (formattedValue >= 1 && formattedValue <= 9) {
+        console.log("agregará 0");
+        console.log(formattedValue);
+        const mm = `0${formattedValue}`;
+        setDataCard((prev) => ({
+          ...prev,
+          mmExpDate: mm,
+        }));
+        console.log(dataCard);
+        console.log(`0${formattedValue}`);
+      } else {
+        setDataCard((prev) => ({
+          ...prev,
+          mmExpDate: formattedValue,
+        }));
+      }
+    }
   };
   const handleYYExpDate = (e) => {
     const { value } = e.target;
     const formattedValue = value.replace(/[^0-9]/g, "").slice(0, 2);
+    const errorExpDate = document.getElementById("errorExpDateCard");
+    errorExpDate.innerHTML = "";
+    e.target.classList.remove("border");
+    e.target.classList.remove("border-Red-errors");
     setDataCard((prev) => ({
       ...prev,
       yyExpDate: formattedValue,
@@ -67,7 +123,33 @@ function App() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(dataCard);
+    const errorExpDate = document.getElementById("errorExpDateCard");
+    const inputMMExpDate = document.getElementById("mmExpDate");
+    const inputYYExpDate = document.getElementById("yyExpDate");
+    const errorCvc = document.getElementById("errorCvc");
+    const inputCvc = document.getElementById("cvc");
+
+    if (dataCard.mmExpDate === "" || dataCard.mmExpDate === "00") {
+      console.log(dataCard.mmExpDate);
+      console.log("pinta borde input MM");
+      errorExpDate.innerHTML = "Can't be blank";
+      inputMMExpDate.classList.add("border");
+      inputMMExpDate.classList.add("border-Red-errors");
+    }
+    if (dataCard.yyExpDate === "" || dataCard.yyExpDate === "00") {
+      console.log(dataCard.yyExpDate);
+      console.log("pinta borde input YY");
+      errorExpDate.innerHTML = "Can't be blank";
+      inputYYExpDate.classList.add("border");
+      inputYYExpDate.classList.add("border-Red-errors");
+    }
+    if (dataCard.cvc === "" || dataCard.cvc === "000") {
+      console.log(dataCard.cvc);
+      console.log("pinta borde input CVC");
+      errorCvc.innerHTML = "Can't be blank";
+      inputCvc.classList.add("border");
+      inputCvc.classList.add("border-Red-errors");
+    }
   };
 
   return (
@@ -131,9 +213,14 @@ function App() {
             id="cardNumber"
             name="cardNumber"
             required
+            title="Card number must be in the format: 1234 5678 9123 0000"
           />
+          <div
+            className="text-Red-errors font-medium text-sm text-right"
+            id="errorCardNumber"
+          ></div>
           <div className="grid grid-cols-2 gap-x-5 mb-4">
-            <div className="">
+            <div>
               <label className="label" htmlFor="expDate">
                 Exp. Date (MM/YY)
               </label>
@@ -146,17 +233,22 @@ function App() {
                   maxLength={2}
                   placeholder="MM"
                   required
+                  value={dataCard.mmExpDate}
                 />
                 <input
                   className="input"
                   onChange={handleYYExpDate}
                   type="text"
-                  od="yyExpDate"
+                  id="yyExpDate"
                   maxLength={2}
                   placeholder="YY"
                   required
                 />
               </div>
+              <div
+                className="text-Red-errors font-medium text-[13px] text-left "
+                id="errorExpDateCard"
+              ></div>
             </div>
             <div>
               <label className="label" htmlFor="cvc">
@@ -172,10 +264,14 @@ function App() {
                 maxLength={3}
                 required
               />
+              <div
+                className="text-Red-errors font-medium text-sm text-left"
+                id="errorCvc"
+              ></div>
             </div>
           </div>
           <button
-            className="bg-Very-dark-violet w-[100%] text-Light-grayish-violet py-3 rounded-[10px] font-bold"
+            className="bg-Very-dark-violet w-[100%] text-Light-grayish-violet py-3 rounded-[10px] font-bold cursor-pointer"
             type="submit"
             onClick={handleSubmit}
           >

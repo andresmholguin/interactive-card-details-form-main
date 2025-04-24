@@ -24,12 +24,12 @@
 
 @layer components {
   .label {
-    @apply uppercase text-xs tracking-[2px] block mb-2;
+    @apply uppercase text-xs tracking-[2px] block mb-2 mt-6;
   }
   .input {
-    @apply bg-White border border-Light-grayish-violet rounded-lg p-3 mb-4 w-[100%];
+    @apply bg-White border border-Light-grayish-violet rounded-lg p-3 w-[100%];
   }
   .input:focus {
-    @apply outline-none border-2 border-Dark-grayish-violet;
+    @apply outline-none border-1 border-Very-dark-violet;
   }
 }
